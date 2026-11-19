@@ -29,10 +29,12 @@ from . import features
 ROOT = Path(__file__).resolve().parent.parent
 MODEL_PATH = ROOT / "models" / "sepsis_hgb.joblib"
 
-# Variants. "physiology" leaves out the two time/admin features that explanations
+# Variants. "physiology" leaves out the time/admin features that explanations
 # showed the full model leaning on (hours in ICU, time from hospital admission),
-# to measure how much of its skill is physiology versus a time shortcut.
-VARIANTS = {"full": [], "physiology": ["ICULOS", "HospAdmTime"]}
+# plus the running count of labs drawn, which grows with length of stay and so
+# let the clock back in (its top reason was "335 labs drawn"). It keeps the
+# 24-hour lab count instead. Measures physiology versus a time shortcut.
+VARIANTS = {"full": [], "physiology": ["ICULOS", "HospAdmTime", "labs_drawn_so_far"]}
 
 
 def variant_paths(variant: str) -> tuple[Path, str]:

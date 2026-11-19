@@ -44,3 +44,16 @@ def test_patients_do_not_bleed_into_each_other():
     X = features.build(df)
     assert np.isnan(X.HR_last.iloc[2])                 # b's first hour must not inherit a's 100
     assert X.HR_last.iloc[3] == 80.0
+
+
+def test_labs_drawn_24h_is_a_window_not_a_running_total():
+    n = 30
+    df = pd.DataFrame({"patient": ["a"] * n + ["b"] * 3, "hour": list(range(n)) + [0, 1, 2]})
+    for c in features.MEASURED + features.DEMOGRAPHICS:
+        df[c] = np.nan
+    df["Lactate"] = 1.0                                   # one lab every hour
+    X = features.build(df)
+    a = X[df.patient == "a"]
+    assert a.labs_drawn_so_far.iloc[-1] == n              # grows with the stay
+    assert a.labs_drawn_24h.iloc[-1] == 24                # capped by the window
+    assert X[df.patient == "b"].labs_drawn_24h.tolist() == [1, 2, 3]   # resets per patient

@@ -48,7 +48,8 @@ def test_physiology_variant_leaves_out_time_features_and_writes_its_own_files(ra
     assert main(common + ["train"]) == 0
     bundle = joblib.load(tmp_path / "phys.joblib")
     assert "ICULOS" not in bundle["columns"] and "HospAdmTime" not in bundle["columns"]
-    assert bundle["excluded"] == ["ICULOS", "HospAdmTime"]
+    assert bundle["excluded"] == ["ICULOS", "HospAdmTime", "labs_drawn_so_far"]
+    assert "labs_drawn_24h" in bundle["columns"]
     assert main(common + ["evaluate"]) == 0 and main(common + ["explain"]) == 0
     assert (out / "model_physiology.json").exists() and (out / "explanations_physiology.json").exists()
     assert not (out / "model.json").exists()                      # the full model's results are untouched

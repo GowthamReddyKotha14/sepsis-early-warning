@@ -32,7 +32,7 @@ NAMES = {"HR": "heart rate", "O2Sat": "oxygen saturation", "Temp": "temperature"
          "Lactate": "lactate", "Magnesium": "magnesium", "Phosphate": "phosphate", "Potassium": "potassium",
          "Bilirubin_total": "bilirubin", "TroponinI": "troponin", "Hct": "hematocrit", "Hgb": "hemoglobin",
          "PTT": "clotting time (PTT)", "WBC": "white cell count", "Fibrinogen": "fibrinogen", "Platelets": "platelets",
-         "shock_index": "shock index (HR / systolic BP)", "labs_drawn_so_far": "number of labs drawn",
+         "shock_index": "shock index (HR / systolic BP)", "labs_drawn_so_far": "number of labs drawn", "labs_drawn_24h": "labs drawn in the last 24 h",
          "ICULOS": "hours in ICU", "HospAdmTime": "time from hospital admission", "Age": "age"}
 
 

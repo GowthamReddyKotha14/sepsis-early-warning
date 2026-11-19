@@ -6,7 +6,9 @@ Per patient, in time order:
     signal: a lactate drawn an hour ago means someone was worried an hour ago.
   * for the 8 vitals: mean over the last 6 hours and change versus 6 hours ago
   * shock index (heart rate / systolic BP), a bedside sign of circulatory trouble
-  * labs drawn so far, demographics, hours in ICU
+  * labs drawn so far, and labs drawn in the last 24 hours (the running total
+    grows with length of stay, so it doubles as a clock; the 24-hour count
+    measures how worried the team is now), demographics, hours in ICU
 Missing stays missing (NaN): the model handles it natively, and "never measured"
 is information too.
 
@@ -47,7 +49,10 @@ def build(df: pd.DataFrame) -> pd.DataFrame:
         out[f"{c}_delta{WINDOW}h"] = lc - lag.shift(WINDOW)
 
     out["shock_index"] = last["HR"] / last["SBP"]
-    out["labs_drawn_so_far"] = df[LABS].notna().sum(axis=1).groupby(df["patient"], sort=False).cumsum()
+    drawn = df[LABS].notna().sum(axis=1)
+    so_far = drawn.groupby(df["patient"], sort=False).cumsum()
+    out["labs_drawn_so_far"] = so_far
+    out["labs_drawn_24h"] = so_far - so_far.groupby(df["patient"], sort=False).shift(24).fillna(0)
     for c in DEMOGRAPHICS:
         out[c] = df[c]
     return pd.DataFrame(out, index=df.index).astype("float32")
