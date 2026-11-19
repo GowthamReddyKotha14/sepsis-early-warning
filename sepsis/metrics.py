@@ -85,3 +85,23 @@ def warning_lead_times(df: pd.DataFrame, warn: np.ndarray) -> pd.Series:
         w = np.flatnonzero(g.warn.to_numpy()[: onset + DT_LATE + 1])
         out[pid] = float(onset - w[0]) if len(w) else np.nan
     return pd.Series(out, name="lead_hours")
+
+
+def alert_burden(df: pd.DataFrame, warn: np.ndarray, shift_hours: int = 12) -> dict:
+    """What nurses experience. An ALERT is the moment a warning switches on
+    (a warning that stays on for 5 hours is one alert, not five).
+      alerts_per_bed_shift: alerts per patient per 12-hour shift
+      septic_alert_share:   share of alerts on patients who develop sepsis (the rest are false alarms)
+    """
+    w = np.asarray(warn, bool)
+    prev = df.groupby("patient", sort=False)["hour"].transform("min").to_numpy() == df["hour"].to_numpy()
+    shifted = np.r_[False, w[:-1]]
+    rising = w & (~shifted | prev)                                  # on now, and off the hour before (same patient)
+    septic_patient = df.groupby("patient", sort=False)["SepsisLabel"].transform("max").to_numpy().astype(bool)
+    n_alerts = int(rising.sum())
+    return {
+        "alerts": n_alerts,
+        "alerts_per_bed_shift": round(n_alerts / (len(df) / shift_hours), 4),
+        "septic_alert_share": round(float(rising[septic_patient].sum() / n_alerts), 4) if n_alerts else None,
+        "warning_hour_share": round(float(w.mean()), 4),
+    }
