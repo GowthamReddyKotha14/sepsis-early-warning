@@ -40,3 +40,9 @@ def test_describe_reads_like_a_chart_note():
     row = pd.Series({"HR_last": 118.0, "HR_delta6h": 24.0, "Lactate_last": 3.4, "Lactate_age": 2.0})
     assert explain.describe("HR", row) == "heart rate 118 (up 24 in 6 h)"
     assert explain.describe("Lactate", row) == "lactate 3.4, drawn 2 h ago"
+
+
+def test_time_variables_read_plainly_and_missing_derived_values_are_skipped():
+    row = pd.Series({"HospAdmTime": -929.0, "ICULOS": 58.0, "shock_index": np.nan})
+    assert explain.describe("HospAdmTime", row) == "in hospital 929 h before ICU admission"
+    assert explain.describe("ICULOS", row) == "58 hours in ICU"

@@ -65,6 +65,10 @@ def describe(group: str, row: pd.Series) -> str:
             s += f", drawn {int(age)} h ago" if age >= 1 else ", drawn this hour"
         return s
     v = row.get(group)
+    if group == "HospAdmTime" and pd.notna(v):
+        return f"in hospital {abs(v):.0f} h before ICU admission"
+    if group == "ICULOS" and pd.notna(v):
+        return f"{v:.0f} hours in ICU"
     return f"{name} {v:.3g}" if pd.notna(v) else name
 
 
@@ -89,6 +93,8 @@ def explain(bundle: dict, X_rows: pd.DataFrame, ref: pd.Series, top: int = 3) ->
         for j, g in enumerate(gnames):
             if g in VITALS + LABS and pd.isna(row.get(f"{g}_last")):
                 continue                                   # only measurements the patient has
+            if g not in VITALS + LABS and g in row.index and pd.isna(row.get(g)):
+                continue                                   # nor derived values that can't be computed yet
             if drops[r, j] > 0:
                 cands.append({"measure": g, "text": describe(g, row), "risk_drop": round(float(drops[r, j]), 4)})
         cands.sort(key=lambda d: -d["risk_drop"])
