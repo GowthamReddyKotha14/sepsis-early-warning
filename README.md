@@ -18,6 +18,19 @@ Reyna MA, et al. *Early Prediction of Sepsis From Clinical Data: The PhysioNet/C
 - **Hospital A trains, hospital B tests.** Hospital A is split 80/20 into train and validation (stratified by sepsis). Hospital B is held out entirely, as an external test of whether the model transfers to a hospital it never saw.
 - **Scored the way the challenge scored it**, with the official utility metric (reimplemented and checked against PhysioNet's code), plus lead time and alarms per nurse shift.
 
+## Run it
+
+```bash
+python3 -m venv .venv && source .venv/bin/activate
+make install
+make data        # download PhysioNet 2019 (about 41 MB)
+make audit       # cohort summary -> results/audit.json
+make baseline    # SIRS / qSOFA scores -> results/baseline.json
+make test        # tests use small synthetic patients, never the real data
+```
+
 ## Status
 
-Work in progress. Built step by step; see the commit history.
+Work in progress, built step by step (see the commit history). Done: data pipeline, official utility metric, patient-level split with an external hospital, clinical baselines. Next: the model, alarm threshold selection, explanations, and a live ward replay.
+
+[![ci](https://github.com/GowthamReddyKotha14/sepsis-early-warning/actions/workflows/ci.yml/badge.svg)](https://github.com/GowthamReddyKotha14/sepsis-early-warning/actions/workflows/ci.yml)
