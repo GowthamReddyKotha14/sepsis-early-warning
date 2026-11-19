@@ -1,5 +1,5 @@
 # Each step writes its output; run them in order the first time.
-.PHONY: install data audit baseline test
+.PHONY: install data audit baseline train evaluate test
 
 install:          ## Python packages (use a virtual environment)
 	pip install -e ".[dev]"
@@ -12,6 +12,12 @@ audit:            ## cohort summary -> results/audit.json
 
 baseline:         ## SIRS / qSOFA scores -> results/baseline.json
 	python -m sepsis baseline
+
+train:            ## features + model on hospital A -> models/sepsis_hgb.joblib (a few minutes)
+	python -m sepsis train
+
+evaluate:         ## choose alarm level on validation, score hospital B once -> results/model.json
+	python -m sepsis evaluate
 
 test:
 	pytest -q
