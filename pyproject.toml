@@ -1,0 +1,22 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "sepsis-early-warning"
+version = "0.1.0"
+description = "Hour-by-hour sepsis early warning on PhysioNet 2019 ICU data, evaluated for lead time and alarm burden."
+readme = "README.md"
+requires-python = ">=3.10"
+license = {text = "MIT"}
+authors = [{name = "Gowtham Reddy Kotha"}]
+dependencies = ["numpy>=1.24", "pandas>=2.0", "pyarrow>=14", "scikit-learn>=1.4", "joblib>=1.3"]
+
+[project.optional-dependencies]
+dev = ["pytest>=8"]
+
+[tool.setuptools.packages.find]
+include = ["sepsis*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
