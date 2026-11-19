@@ -32,3 +32,7 @@ def test_train_and_evaluate_end_to_end(raw_dir, tmp_path):
     assert budget["validation (hospital A)"]["alerts_per_bed_shift"] <= 0.3 + 1e-9
     assert 0 <= budget["external test (hospital B)"]["auroc_hourly"] <= 1
     assert (tmp_path / "results/threshold_sweep.csv").exists()
+    assert main(common + ["explain"]) == 0
+    ex = json.loads((tmp_path / "results/explanations.json").read_text())
+    assert ex["alerts"] >= 1 and ex["examples"]
+    assert all(e["kind"] in ("real sepsis", "false alarm") for e in ex["examples"])
