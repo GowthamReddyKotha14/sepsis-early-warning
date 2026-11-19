@@ -1,0 +1,402 @@
+{
+  "hospital": "B (external test)",
+  "threshold": 0.46835,
+  "alerts": 8365,
+  "method": "group occlusion against typical non-septic values; see sepsis/explain.py",
+  "top_reason_counts": {
+    "real sepsis": [
+      {
+        "measure": "ICULOS",
+        "name": "hours in ICU",
+        "share_of_alerts": 0.6412
+      },
+      {
+        "measure": "HospAdmTime",
+        "name": "time from hospital admission",
+        "share_of_alerts": 0.146
+      },
+      {
+        "measure": "Lactate",
+        "name": "lactate",
+        "share_of_alerts": 0.0721
+      },
+      {
+        "measure": "Temp",
+        "name": "temperature",
+        "share_of_alerts": 0.0584
+      },
+      {
+        "measure": "shock_index",
+        "name": "shock index (HR / systolic BP)",
+        "share_of_alerts": 0.0179
+      },
+      {
+        "measure": "Creatinine",
+        "name": "creatinine (kidney)",
+        "share_of_alerts": 0.0131
+      },
+      {
+        "measure": "HR",
+        "name": "heart rate",
+        "share_of_alerts": 0.0066
+      },
+      {
+        "measure": "Resp",
+        "name": "respiratory rate",
+        "share_of_alerts": 0.0066
+      },
+      {
+        "measure": "PTT",
+        "name": "clotting time (PTT)",
+        "share_of_alerts": 0.006
+      },
+      {
+        "measure": "WBC",
+        "name": "white cell count",
+        "share_of_alerts": 0.006
+      }
+    ],
+    "false alarm": [
+      {
+        "measure": "HospAdmTime",
+        "name": "time from hospital admission",
+        "share_of_alerts": 0.4383
+      },
+      {
+        "measure": "ICULOS",
+        "name": "hours in ICU",
+        "share_of_alerts": 0.1649
+      },
+      {
+        "measure": "Temp",
+        "name": "temperature",
+        "share_of_alerts": 0.1213
+      },
+      {
+        "measure": "Lactate",
+        "name": "lactate",
+        "share_of_alerts": 0.0761
+      },
+      {
+        "measure": "shock_index",
+        "name": "shock index (HR / systolic BP)",
+        "share_of_alerts": 0.0692
+      },
+      {
+        "measure": "Resp",
+        "name": "respiratory rate",
+        "share_of_alerts": 0.0329
+      },
+      {
+        "measure": "HR",
+        "name": "heart rate",
+        "share_of_alerts": 0.0209
+      },
+      {
+        "measure": "Creatinine",
+        "name": "creatinine (kidney)",
+        "share_of_alerts": 0.0208
+      },
+      {
+        "measure": "O2Sat",
+        "name": "oxygen saturation",
+        "share_of_alerts": 0.0154
+      },
+      {
+        "measure": "WBC",
+        "name": "white cell count",
+        "share_of_alerts": 0.007
+      }
+    ]
+  },
+  "examples": [
+    {
+      "kind": "real sepsis",
+      "patient": "p111512",
+      "hour": 0,
+      "risk": 0.486,
+      "hours_before_onset": 330,
+      "reasons": [
+        {
+          "measure": "HospAdmTime",
+          "text": "time from hospital admission -929",
+          "risk_drop": 0.3853
+        },
+        {
+          "measure": "shock_index",
+          "text": "shock index (HR / systolic BP)",
+          "risk_drop": 0.0503
+        },
+        {
+          "measure": "ICULOS",
+          "text": "hours in ICU 1",
+          "risk_drop": 0.0381
+        }
+      ]
+    },
+    {
+      "kind": "real sepsis",
+      "patient": "p113897",
+      "hour": 11,
+      "risk": 0.514,
+      "hours_before_onset": 73,
+      "reasons": [
+        {
+          "measure": "Lactate",
+          "text": "lactate 1.92, drawn 3 h ago",
+          "risk_drop": 0.1175
+        },
+        {
+          "measure": "HospAdmTime",
+          "text": "time from hospital admission -334",
+          "risk_drop": 0.1125
+        },
+        {
+          "measure": "Hct",
+          "text": "hematocrit 25.5, drawn this hour",
+          "risk_drop": 0.0542
+        }
+      ]
+    },
+    {
+      "kind": "real sepsis",
+      "patient": "p118515",
+      "hour": 57,
+      "risk": 0.514,
+      "hours_before_onset": 21,
+      "reasons": [
+        {
+          "measure": "ICULOS",
+          "text": "hours in ICU 58",
+          "risk_drop": 0.4391
+        },
+        {
+          "measure": "Creatinine",
+          "text": "creatinine (kidney) 6.46, drawn 20 h ago",
+          "risk_drop": 0.0486
+        },
+        {
+          "measure": "Hct",
+          "text": "hematocrit 25.6, drawn 20 h ago",
+          "risk_drop": 0.0355
+        }
+      ]
+    },
+    {
+      "kind": "real sepsis",
+      "patient": "p118963",
+      "hour": 109,
+      "risk": 0.59,
+      "hours_before_onset": 83,
+      "reasons": [
+        {
+          "measure": "ICULOS",
+          "text": "hours in ICU 110",
+          "risk_drop": 0.5242
+        },
+        {
+          "measure": "HospAdmTime",
+          "text": "time from hospital admission -335",
+          "risk_drop": 0.0661
+        },
+        {
+          "measure": "Age",
+          "text": "age 38",
+          "risk_drop": 0.0563
+        }
+      ]
+    },
+    {
+      "kind": "real sepsis",
+      "patient": "p112608",
+      "hour": 24,
+      "risk": 0.478,
+      "hours_before_onset": 263,
+      "reasons": [
+        {
+          "measure": "Lactate",
+          "text": "lactate 0.85, drawn this hour",
+          "risk_drop": 0.2023
+        },
+        {
+          "measure": "Phosphate",
+          "text": "phosphate 1.5, drawn 8 h ago",
+          "risk_drop": 0.0705
+        },
+        {
+          "measure": "Glucose",
+          "text": "glucose 136, drawn this hour",
+          "risk_drop": 0.0688
+        }
+      ]
+    },
+    {
+      "kind": "real sepsis",
+      "patient": "p116049",
+      "hour": 0,
+      "risk": 0.518,
+      "hours_before_onset": 149,
+      "reasons": [
+        {
+          "measure": "HospAdmTime",
+          "text": "time from hospital admission -352",
+          "risk_drop": 0.2273
+        },
+        {
+          "measure": "ICULOS",
+          "text": "hours in ICU 1",
+          "risk_drop": 0.1022
+        },
+        {
+          "measure": "shock_index",
+          "text": "shock index (HR / systolic BP)",
+          "risk_drop": 0.0869
+        }
+      ]
+    },
+    {
+      "kind": "false alarm",
+      "patient": "p110160",
+      "hour": 0,
+      "risk": 0.524,
+      "hours_before_onset": null,
+      "reasons": [
+        {
+          "measure": "HospAdmTime",
+          "text": "time from hospital admission -398",
+          "risk_drop": 0.3079
+        },
+        {
+          "measure": "ICULOS",
+          "text": "hours in ICU 1",
+          "risk_drop": 0.0494
+        },
+        {
+          "measure": "shock_index",
+          "text": "shock index (HR / systolic BP)",
+          "risk_drop": 0.0465
+        }
+      ]
+    },
+    {
+      "kind": "false alarm",
+      "patient": "p102778",
+      "hour": 1,
+      "risk": 0.474,
+      "hours_before_onset": null,
+      "reasons": [
+        {
+          "measure": "shock_index",
+          "text": "shock index (HR / systolic BP) 1.02",
+          "risk_drop": 0.1388
+        },
+        {
+          "measure": "O2Sat",
+          "text": "oxygen saturation 94.5",
+          "risk_drop": 0.134
+        },
+        {
+          "measure": "HR",
+          "text": "heart rate 116",
+          "risk_drop": 0.0457
+        }
+      ]
+    },
+    {
+      "kind": "false alarm",
+      "patient": "p100135",
+      "hour": 21,
+      "risk": 0.489,
+      "hours_before_onset": null,
+      "reasons": [
+        {
+          "measure": "Temp",
+          "text": "temperature 38.7",
+          "risk_drop": 0.3204
+        },
+        {
+          "measure": "Resp",
+          "text": "respiratory rate 22 (up 7 in 6 h)",
+          "risk_drop": 0.1312
+        },
+        {
+          "measure": "Alkalinephos",
+          "text": "alkaline phosphatase 49, drawn 8 h ago",
+          "risk_drop": 0.0845
+        }
+      ]
+    },
+    {
+      "kind": "false alarm",
+      "patient": "p118246",
+      "hour": 58,
+      "risk": 0.502,
+      "hours_before_onset": null,
+      "reasons": [
+        {
+          "measure": "ICULOS",
+          "text": "hours in ICU 59",
+          "risk_drop": 0.4753
+        },
+        {
+          "measure": "Alkalinephos",
+          "text": "alkaline phosphatase 44, drawn 7 h ago",
+          "risk_drop": 0.0864
+        },
+        {
+          "measure": "DBP",
+          "text": "diastolic BP 101 (up 26 in 6 h)",
+          "risk_drop": 0.0458
+        }
+      ]
+    },
+    {
+      "kind": "false alarm",
+      "patient": "p117518",
+      "hour": 9,
+      "risk": 0.488,
+      "hours_before_onset": null,
+      "reasons": [
+        {
+          "measure": "ICULOS",
+          "text": "hours in ICU 10",
+          "risk_drop": 0.0931
+        },
+        {
+          "measure": "shock_index",
+          "text": "shock index (HR / systolic BP) 1.06",
+          "risk_drop": 0.0716
+        },
+        {
+          "measure": "Age",
+          "text": "age 53",
+          "risk_drop": 0.0638
+        }
+      ]
+    },
+    {
+      "kind": "false alarm",
+      "patient": "p116502",
+      "hour": 52,
+      "risk": 0.552,
+      "hours_before_onset": null,
+      "reasons": [
+        {
+          "measure": "ICULOS",
+          "text": "hours in ICU 53",
+          "risk_drop": 0.1954
+        },
+        {
+          "measure": "Creatinine",
+          "text": "creatinine (kidney) 3.68, drawn 15 h ago",
+          "risk_drop": 0.0808
+        },
+        {
+          "measure": "Phosphate",
+          "text": "phosphate 2.1, drawn 15 h ago",
+          "risk_drop": 0.0722
+        }
+      ]
+    }
+  ]
+}
