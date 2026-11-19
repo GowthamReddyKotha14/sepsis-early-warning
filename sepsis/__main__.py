@@ -10,6 +10,9 @@
                                         -> results/model.json, results/threshold_sweep.csv
   explain   why each hospital B alert fired: top reasons, real alerts vs false alarms
                                         -> results/explanations.json
+
+--variant physiology runs train/evaluate/explain for a model without the time
+features (hours in ICU, time from hospital admission); its files end in _physiology.
 """
 from __future__ import annotations
 
@@ -72,7 +75,7 @@ def cmd_baseline(a) -> int:
 
 def cmd_train(a) -> int:
     df = data.load(Path(a.table))
-    model.train(df, assign_splits(df), Path(a.model))
+    model.train(df, assign_splits(df), Path(a.model), exclude=model.VARIANTS[a.variant])
     return 0
 
 
@@ -102,8 +105,8 @@ def cmd_evaluate(a) -> int:
             r["auprc_hourly"] = round(float(average_precision_score(sdf.SepsisLabel, srisk)), 4)
             out["results"][name][label] = r
     Path(a.out).mkdir(parents=True, exist_ok=True)
-    (Path(a.out) / "model.json").write_text(json.dumps(out, indent=2))
-    sweep.round(5).to_csv(Path(a.out) / "threshold_sweep.csv", index=False)
+    (Path(a.out) / f"model{a.suffix}.json").write_text(json.dumps(out, indent=2))
+    sweep.round(5).to_csv(Path(a.out) / f"threshold_sweep{a.suffix}.csv", index=False)
 
     base_path = Path(a.out) / "baseline.json"
     rows = []
@@ -111,7 +114,8 @@ def cmd_evaluate(a) -> int:
         for rule, res in json.loads(base_path.read_text()).items():
             rows.append((rule, res["external test (hospital B)"]))
     for name in picks:
-        rows.append((f"Model ({name})", out["results"][name]["external test (hospital B)"]))
+        label = "Model" if a.variant == "full" else f"Model, {a.variant} only"
+        rows.append((f"{label} ({name})", out["results"][name]["external test (hospital B)"]))
     print("\nExternal test, hospital B (never used for training or tuning):")
     print(f"{'':44}{'utility':>8}{'alerts/bed/shift':>18}{'real-sepsis alerts':>20}{'septic warned':>16}")
     for name, r in rows:
@@ -125,7 +129,7 @@ def cmd_explain(a) -> int:
     df = data.load(Path(a.table))
     split = assign_splits(df).to_numpy()
     bundle = model.load(Path(a.model))
-    res = json.loads((Path(a.out) / "model.json").read_text())
+    res = json.loads((Path(a.out) / f"model{a.suffix}.json").read_text())
     thr = res["results"][f"budget {a.budget} alerts/bed/shift"]["threshold"]
     X = features.build(df)
     ref = explain.reference(X[(split == "train") & (df.SepsisLabel.to_numpy() == 0)][bundle["columns"]])
@@ -157,10 +161,10 @@ def cmd_explain(a) -> int:
                              "risk": round(float(risk[idx]), 3),
                              "hours_before_onset": int(onset[idx] - bdf.hour[idx]) if septic[idx] else None,
                              "reasons": reasons[j]})
-    out = {"hospital": "B (external test)", "threshold": thr, "alerts": int(len(rising)),
+    out = {"hospital": "B (external test)", "variant": a.variant, "threshold": thr, "alerts": int(len(rising)),
            "method": "group occlusion against typical non-septic values; see sepsis/explain.py",
            "top_reason_counts": summary, "examples": examples}
-    (Path(a.out) / "explanations.json").write_text(json.dumps(out, indent=2))
+    (Path(a.out) / f"explanations{a.suffix}.json").write_text(json.dumps(out, indent=2))
     for k, rows in summary.items():
         print(f"\nMost common top reason, {k}:")
         for r in rows[:5]:
@@ -175,7 +179,8 @@ def main(argv=None) -> int:
     p.add_argument("--raw", default=str(data.RAW))
     p.add_argument("--table", default=str(data.PARQUET))
     p.add_argument("--out", default=str(RESULTS))
-    p.add_argument("--model", default=str(model.MODEL_PATH))
+    p.add_argument("--model", default=None, help="model file (default: by --variant)")
+    p.add_argument("--variant", default="full", choices=sorted(model.VARIANTS))
     p.add_argument("--budget", type=float, default=threshold.DEFAULT_BUDGET,
                    help="max alerts per bed per 12-hour shift when choosing the threshold")
     sub = p.add_subparsers(dest="cmd", required=True)
@@ -183,6 +188,8 @@ def main(argv=None) -> int:
                      ("train", cmd_train), ("evaluate", cmd_evaluate), ("explain", cmd_explain)):
         sub.add_parser(name).set_defaults(func=fn)
     a = p.parse_args(argv)
+    path, a.suffix = model.variant_paths(a.variant)
+    a.model = a.model or str(path)
     return a.func(a)
 
 

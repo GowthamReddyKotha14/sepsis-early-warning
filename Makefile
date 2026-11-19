@@ -1,5 +1,5 @@
 # Each step writes its output; run them in order the first time.
-.PHONY: install data audit baseline train evaluate explain test
+.PHONY: install data audit baseline train evaluate explain physiology test
 
 install:          ## Python packages (use a virtual environment)
 	pip install -e ".[dev]"
@@ -21,6 +21,11 @@ evaluate:         ## choose alarm level on validation, score hospital B once -> 
 
 explain:          ## why each hospital B alert fired -> results/explanations.json
 	python -m sepsis explain
+
+physiology:       ## same model without hours-in-ICU / admission time -> *_physiology results
+	python -m sepsis --variant physiology train
+	python -m sepsis --variant physiology evaluate
+	python -m sepsis --variant physiology explain
 
 test:
 	pytest -q

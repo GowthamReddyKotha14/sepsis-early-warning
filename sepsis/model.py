@@ -29,6 +29,18 @@ from . import features
 ROOT = Path(__file__).resolve().parent.parent
 MODEL_PATH = ROOT / "models" / "sepsis_hgb.joblib"
 
+# Variants. "physiology" leaves out the two time/admin features that explanations
+# showed the full model leaning on (hours in ICU, time from hospital admission),
+# to measure how much of its skill is physiology versus a time shortcut.
+VARIANTS = {"full": [], "physiology": ["ICULOS", "HospAdmTime"]}
+
+
+def variant_paths(variant: str) -> tuple[Path, str]:
+    """(model file, results suffix) for a variant."""
+    if variant == "full":
+        return MODEL_PATH, ""
+    return MODEL_PATH.with_name(f"sepsis_hgb_{variant}.joblib"), f"_{variant}"
+
 PARAMS = dict(learning_rate=0.05, max_iter=300, max_leaf_nodes=31, min_samples_leaf=200,
               l2_regularization=1.0, class_weight="balanced", early_stopping=False, random_state=2019)
 
@@ -53,17 +65,19 @@ def predict(bundle: dict, X: pd.DataFrame) -> np.ndarray:
     return bundle["model"].predict_proba(X[bundle["columns"]])[:, 1]
 
 
-def train(df: pd.DataFrame, split: pd.Series, path: Path = MODEL_PATH, log=print) -> dict:
+def train(df: pd.DataFrame, split: pd.Series, path: Path = MODEL_PATH, log=print, exclude=()) -> dict:
     t0 = time.time()
     X = features.build(df)
     tr = (split == "train").to_numpy()
     # A column with no values at all in training carries no information, and
     # sklearn's binning fails on it, so it is left out (and recorded).
     empty = [c for c in X.columns if X.loc[tr, c].isna().all()]
-    cols = [c for c in X.columns if c not in empty]
+    cols = [c for c in X.columns if c not in empty and c not in exclude]
+    if exclude:
+        log(f"variant leaves out: {', '.join(exclude)}")
     log(f"features: {len(cols)} columns ({len(empty)} empty in training, left out); training on "
         f"{tr.sum():,} patient-hours ({df.patient[tr].nunique():,} patients, hospital A only)")
     clf = fit(X.loc[tr, cols], df.SepsisLabel.to_numpy()[tr])
-    save(clf, cols, path, dropped_empty=empty, train_rows=int(tr.sum()), train_seconds=round(time.time() - t0, 1))
+    save(clf, cols, path, dropped_empty=empty, excluded=list(exclude), train_rows=int(tr.sum()), train_seconds=round(time.time() - t0, 1))
     log(f"trained in {time.time() - t0:.0f}s -> {path}")
     return load(path)

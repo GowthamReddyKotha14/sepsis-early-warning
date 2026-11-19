@@ -36,3 +36,19 @@ def test_train_and_evaluate_end_to_end(raw_dir, tmp_path):
     ex = json.loads((tmp_path / "results/explanations.json").read_text())
     assert ex["alerts"] >= 1 and ex["examples"]
     assert all(e["kind"] in ("real sepsis", "false alarm") for e in ex["examples"])
+
+
+def test_physiology_variant_leaves_out_time_features_and_writes_its_own_files(raw_dir, tmp_path):
+    import joblib
+    from sepsis.data import build_table
+    table = tmp_path / "hourly.parquet"
+    build_table(raw_dir, table, log=lambda *_: None)
+    out = tmp_path / "results"
+    common = ["--table", str(table), "--out", str(out), "--model", str(tmp_path / "phys.joblib"), "--variant", "physiology"]
+    assert main(common + ["train"]) == 0
+    bundle = joblib.load(tmp_path / "phys.joblib")
+    assert "ICULOS" not in bundle["columns"] and "HospAdmTime" not in bundle["columns"]
+    assert bundle["excluded"] == ["ICULOS", "HospAdmTime"]
+    assert main(common + ["evaluate"]) == 0 and main(common + ["explain"]) == 0
+    assert (out / "model_physiology.json").exists() and (out / "explanations_physiology.json").exists()
+    assert not (out / "model.json").exists()                      # the full model's results are untouched
