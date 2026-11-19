@@ -1,4 +1,4 @@
-"""python -m sepsis {data,audit,baseline,train,evaluate,explain}
+"""python -m sepsis {data,audit,baseline,train,evaluate,explain,site}
 
   data      download PhysioNet 2019 (about 41 MB) and build data/hourly.parquet
   audit     cohort summary              -> results/audit.json
@@ -10,6 +10,9 @@
                                         -> results/model.json, results/threshold_sweep.csv
   explain   why each hospital B alert fired: top reasons, real alerts vs false alarms
                                         -> results/explanations.json
+
+  site      export results and a 16-bed hospital B ward replay for the website
+                                        -> docs/data.js (run after make physiology)
 
 --variant physiology runs train/evaluate/explain for a model without the time
 features (hours in ICU, time from hospital admission); its files end in _physiology.
@@ -173,6 +176,14 @@ def cmd_explain(a) -> int:
     return 0
 
 
+def cmd_site(a) -> int:
+    from . import site
+    variant = "physiology" if a.variant == "full" else a.variant     # the site replays the physiology model
+    mp = Path(a.model) if a.model != str(model.variant_paths(a.variant)[0]) else None
+    site.build(Path(a.table), Path(a.out), variant, Path(a.site), a.budget, model_path=mp)
+    return 0
+
+
 def main(argv=None) -> int:
     p = argparse.ArgumentParser(prog="python -m sepsis", description=__doc__,
                                 formatter_class=argparse.RawDescriptionHelpFormatter)
@@ -181,11 +192,12 @@ def main(argv=None) -> int:
     p.add_argument("--out", default=str(RESULTS))
     p.add_argument("--model", default=None, help="model file (default: by --variant)")
     p.add_argument("--variant", default="full", choices=sorted(model.VARIANTS))
+    p.add_argument("--site", default=str(data.ROOT / "docs" / "data.js"))
     p.add_argument("--budget", type=float, default=threshold.DEFAULT_BUDGET,
                    help="max alerts per bed per 12-hour shift when choosing the threshold")
     sub = p.add_subparsers(dest="cmd", required=True)
     for name, fn in (("data", cmd_data), ("audit", cmd_audit), ("baseline", cmd_baseline),
-                     ("train", cmd_train), ("evaluate", cmd_evaluate), ("explain", cmd_explain)):
+                     ("train", cmd_train), ("evaluate", cmd_evaluate), ("explain", cmd_explain), ("site", cmd_site)):
         sub.add_parser(name).set_defaults(func=fn)
     a = p.parse_args(argv)
     path, a.suffix = model.variant_paths(a.variant)
