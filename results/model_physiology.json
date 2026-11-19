@@ -6,57 +6,57 @@
   "thresholds_chosen_on": "validation (hospital A)",
   "results": {
     "budget 0.3 alerts/bed/shift": {
-      "threshold": 0.50575,
+      "threshold": 0.52336,
       "validation (hospital A)": {
-        "normalized_utility": 0.3573,
+        "normalized_utility": 0.3306,
         "septic_patients": 358,
-        "septic_warned_in_time": 290,
-        "median_lead_hours": 26.0,
-        "alerts": 3909,
-        "alerts_per_bed_shift": 0.2974,
-        "septic_alert_share": 0.2341,
-        "warning_hour_share": 0.1561,
-        "auroc_hourly": 0.8027,
-        "auprc_hourly": 0.0954
+        "septic_warned_in_time": 284,
+        "median_lead_hours": 27.0,
+        "alerts": 3918,
+        "alerts_per_bed_shift": 0.2981,
+        "septic_alert_share": 0.2621,
+        "warning_hour_share": 0.1436,
+        "auroc_hourly": 0.7975,
+        "auprc_hourly": 0.0948
       },
       "external test (hospital B)": {
-        "normalized_utility": 0.1086,
+        "normalized_utility": 0.1343,
         "septic_patients": 1142,
-        "septic_warned_in_time": 500,
-        "median_lead_hours": 29.0,
-        "alerts": 7161,
-        "alerts_per_bed_shift": 0.1128,
-        "septic_alert_share": 0.2121,
-        "warning_hour_share": 0.043,
-        "auroc_hourly": 0.6987,
-        "auprc_hourly": 0.0427
+        "septic_warned_in_time": 520,
+        "median_lead_hours": 26.0,
+        "alerts": 6570,
+        "alerts_per_bed_shift": 0.1035,
+        "septic_alert_share": 0.2414,
+        "warning_hour_share": 0.0467,
+        "auroc_hourly": 0.7128,
+        "auprc_hourly": 0.0432
       }
     },
     "best utility, no budget": {
-      "threshold": 0.37764,
+      "threshold": 0.41132,
       "validation (hospital A)": {
-        "normalized_utility": 0.3961,
+        "normalized_utility": 0.3776,
         "septic_patients": 358,
-        "septic_warned_in_time": 333,
-        "median_lead_hours": 29.0,
-        "alerts": 5879,
-        "alerts_per_bed_shift": 0.4472,
-        "septic_alert_share": 0.1679,
-        "warning_hour_share": 0.259,
-        "auroc_hourly": 0.8027,
-        "auprc_hourly": 0.0954
+        "septic_warned_in_time": 324,
+        "median_lead_hours": 27.0,
+        "alerts": 5511,
+        "alerts_per_bed_shift": 0.4192,
+        "septic_alert_share": 0.186,
+        "warning_hour_share": 0.2364,
+        "auroc_hourly": 0.7975,
+        "auprc_hourly": 0.0948
       },
       "external test (hospital B)": {
-        "normalized_utility": 0.1062,
+        "normalized_utility": 0.1447,
         "septic_patients": 1142,
-        "septic_warned_in_time": 827,
-        "median_lead_hours": 29.0,
-        "alerts": 18638,
-        "alerts_per_bed_shift": 0.2935,
-        "septic_alert_share": 0.1328,
-        "warning_hour_share": 0.1006,
-        "auroc_hourly": 0.6987,
-        "auprc_hourly": 0.0427
+        "septic_warned_in_time": 772,
+        "median_lead_hours": 27.5,
+        "alerts": 15482,
+        "alerts_per_bed_shift": 0.2438,
+        "septic_alert_share": 0.1439,
+        "warning_hour_share": 0.0913,
+        "auroc_hourly": 0.7128,
+        "auprc_hourly": 0.0432
       }
     }
   }

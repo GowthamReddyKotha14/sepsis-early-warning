@@ -1,353 +1,353 @@
 {
   "hospital": "B (external test)",
   "variant": "physiology",
-  "threshold": 0.50575,
-  "alerts": 7161,
+  "threshold": 0.52336,
+  "alerts": 6570,
   "method": "group occlusion against typical non-septic values; see sepsis/explain.py",
   "top_reason_counts": {
     "real sepsis": [
       {
-        "measure": "labs_drawn_so_far",
-        "name": "number of labs drawn",
-        "share_of_alerts": 0.4286
-      },
-      {
         "measure": "Lactate",
         "name": "lactate",
-        "share_of_alerts": 0.1534
+        "share_of_alerts": 0.1974
       },
       {
         "measure": "Temp",
         "name": "temperature",
-        "share_of_alerts": 0.1027
+        "share_of_alerts": 0.1337
+      },
+      {
+        "measure": "Bilirubin_total",
+        "name": "bilirubin",
+        "share_of_alerts": 0.0876
+      },
+      {
+        "measure": "Fibrinogen",
+        "name": "fibrinogen",
+        "share_of_alerts": 0.0763
       },
       {
         "measure": "shock_index",
         "name": "shock index (HR / systolic BP)",
-        "share_of_alerts": 0.0829
-      },
-      {
-        "measure": "Resp",
-        "name": "respiratory rate",
-        "share_of_alerts": 0.0645
-      },
-      {
-        "measure": "Age",
-        "name": "age",
-        "share_of_alerts": 0.0224
-      },
-      {
-        "measure": "Creatinine",
-        "name": "creatinine (kidney)",
-        "share_of_alerts": 0.0224
-      },
-      {
-        "measure": "TroponinI",
-        "name": "troponin",
-        "share_of_alerts": 0.0211
+        "share_of_alerts": 0.075
       },
       {
         "measure": "PTT",
         "name": "clotting time (PTT)",
-        "share_of_alerts": 0.0178
+        "share_of_alerts": 0.0725
       },
       {
-        "measure": "SaO2",
-        "name": "arterial O2 saturation",
-        "share_of_alerts": 0.0125
+        "measure": "TroponinI",
+        "name": "troponin",
+        "share_of_alerts": 0.0719
+      },
+      {
+        "measure": "Resp",
+        "name": "respiratory rate",
+        "share_of_alerts": 0.0706
+      },
+      {
+        "measure": "Creatinine",
+        "name": "creatinine (kidney)",
+        "share_of_alerts": 0.024
+      },
+      {
+        "measure": "WBC",
+        "name": "white cell count",
+        "share_of_alerts": 0.0189
       }
     ],
     "false alarm": [
       {
         "measure": "shock_index",
         "name": "shock index (HR / systolic BP)",
-        "share_of_alerts": 0.2563
+        "share_of_alerts": 0.2693
       },
       {
         "measure": "Temp",
         "name": "temperature",
-        "share_of_alerts": 0.1668
-      },
-      {
-        "measure": "Lactate",
-        "name": "lactate",
-        "share_of_alerts": 0.1471
+        "share_of_alerts": 0.2079
       },
       {
         "measure": "Resp",
         "name": "respiratory rate",
-        "share_of_alerts": 0.1184
+        "share_of_alerts": 0.1182
       },
       {
-        "measure": "Age",
-        "name": "age",
-        "share_of_alerts": 0.1012
-      },
-      {
-        "measure": "labs_drawn_so_far",
-        "name": "number of labs drawn",
-        "share_of_alerts": 0.0663
-      },
-      {
-        "measure": "Creatinine",
-        "name": "creatinine (kidney)",
-        "share_of_alerts": 0.0385
+        "measure": "Lactate",
+        "name": "lactate",
+        "share_of_alerts": 0.1158
       },
       {
         "measure": "HR",
         "name": "heart rate",
-        "share_of_alerts": 0.0257
+        "share_of_alerts": 0.0482
       },
       {
-        "measure": "DBP",
-        "name": "diastolic BP",
-        "share_of_alerts": 0.0158
+        "measure": "Age",
+        "name": "age",
+        "share_of_alerts": 0.0367
       },
       {
-        "measure": "O2Sat",
-        "name": "oxygen saturation",
-        "share_of_alerts": 0.0083
+        "measure": "Creatinine",
+        "name": "creatinine (kidney)",
+        "share_of_alerts": 0.0321
+      },
+      {
+        "measure": "PTT",
+        "name": "clotting time (PTT)",
+        "share_of_alerts": 0.0269
+      },
+      {
+        "measure": "Bilirubin_total",
+        "name": "bilirubin",
+        "share_of_alerts": 0.0189
+      },
+      {
+        "measure": "TroponinI",
+        "name": "troponin",
+        "share_of_alerts": 0.014
       }
     ]
   },
   "examples": [
     {
       "kind": "real sepsis",
-      "patient": "p111512",
-      "hour": 329,
-      "risk": 0.506,
-      "hours_before_onset": 1,
+      "patient": "p111418",
+      "hour": 190,
+      "risk": 0.568,
+      "hours_before_onset": 36,
       "reasons": [
-        {
-          "measure": "labs_drawn_so_far",
-          "text": "number of labs drawn 335",
-          "risk_drop": 0.3616
-        },
-        {
-          "measure": "Hgb",
-          "text": "hemoglobin 8.1, drawn 2 h ago",
-          "risk_drop": 0.1509
-        },
-        {
-          "measure": "Magnesium",
-          "text": "magnesium 1.5, drawn 29 h ago",
-          "risk_drop": 0.0953
-        }
-      ]
-    },
-    {
-      "kind": "real sepsis",
-      "patient": "p114113",
-      "hour": 36,
-      "risk": 0.557,
-      "hours_before_onset": 220,
-      "reasons": [
-        {
-          "measure": "shock_index",
-          "text": "shock index (HR / systolic BP) 1.31",
-          "risk_drop": 0.1196
-        },
-        {
-          "measure": "Creatinine",
-          "text": "creatinine (kidney) 1.79, drawn 2 h ago",
-          "risk_drop": 0.1151
-        },
-        {
-          "measure": "Resp",
-          "text": "respiratory rate 30",
-          "risk_drop": 0.0858
-        }
-      ]
-    },
-    {
-      "kind": "real sepsis",
-      "patient": "p118804",
-      "hour": 197,
-      "risk": 0.537,
-      "hours_before_onset": 20,
-      "reasons": [
-        {
-          "measure": "labs_drawn_so_far",
-          "text": "number of labs drawn 266",
-          "risk_drop": 0.4248
-        },
-        {
-          "measure": "Potassium",
-          "text": "potassium 3.7, drawn this hour",
-          "risk_drop": 0.0704
-        },
         {
           "measure": "Lactate",
-          "text": "lactate 0.83, drawn 13 h ago",
-          "risk_drop": 0.0686
-        }
-      ]
-    },
-    {
-      "kind": "real sepsis",
-      "patient": "p119555",
-      "hour": 1,
-      "risk": 0.616,
-      "hours_before_onset": 5,
-      "reasons": [
-        {
-          "measure": "shock_index",
-          "text": "shock index (HR / systolic BP) 1.08",
-          "risk_drop": 0.1573
+          "text": "lactate 0.94, drawn 62 h ago",
+          "risk_drop": 0.2481
         },
         {
           "measure": "HR",
-          "text": "heart rate 94",
-          "risk_drop": 0.056
-        },
-        {
-          "measure": "SBP",
-          "text": "systolic BP 87",
-          "risk_drop": 0.0494
-        }
-      ]
-    },
-    {
-      "kind": "real sepsis",
-      "patient": "p112647",
-      "hour": 52,
-      "risk": 0.524,
-      "hours_before_onset": 90,
-      "reasons": [
-        {
-          "measure": "Lactate",
-          "text": "lactate 0.63, drawn 1 h ago",
-          "risk_drop": 0.1878
-        },
-        {
-          "measure": "Creatinine",
-          "text": "creatinine (kidney) 3.28, drawn 15 h ago",
-          "risk_drop": 0.0725
+          "text": "heart rate 111",
+          "risk_drop": 0.1027
         },
         {
           "measure": "Fibrinogen",
-          "text": "fibrinogen 321, drawn 49 h ago",
-          "risk_drop": 0.0725
+          "text": "fibrinogen 166, drawn 46 h ago",
+          "risk_drop": 0.0837
         }
       ]
     },
     {
       "kind": "real sepsis",
-      "patient": "p116743",
-      "hour": 98,
-      "risk": 0.522,
-      "hours_before_onset": 81,
+      "patient": "p113526",
+      "hour": 28,
+      "risk": 0.593,
+      "hours_before_onset": 6,
       "reasons": [
         {
-          "measure": "labs_drawn_so_far",
-          "text": "number of labs drawn 664",
-          "risk_drop": 0.3618
-        },
-        {
-          "measure": "BUN",
-          "text": "BUN (kidney) 37, drawn 2 h ago",
-          "risk_drop": 0.0633
-        },
-        {
           "measure": "Lactate",
-          "text": "lactate 2.12, drawn 3 h ago",
-          "risk_drop": 0.0625
+          "text": "lactate 1.19, drawn 2 h ago",
+          "risk_drop": 0.1027
+        },
+        {
+          "measure": "Platelets",
+          "text": "platelets 100, drawn 10 h ago",
+          "risk_drop": 0.0686
+        },
+        {
+          "measure": "FiO2",
+          "text": "inspired oxygen (FiO2) 1, drawn 1 h ago",
+          "risk_drop": 0.049
         }
       ]
     },
     {
-      "kind": "false alarm",
-      "patient": "p110236",
-      "hour": 51,
-      "risk": 0.511,
-      "hours_before_onset": null,
+      "kind": "real sepsis",
+      "patient": "p118783",
+      "hour": 80,
+      "risk": 0.603,
+      "hours_before_onset": 21,
       "reasons": [
         {
-          "measure": "labs_drawn_so_far",
-          "text": "number of labs drawn 137",
-          "risk_drop": 0.1107
+          "measure": "Temp",
+          "text": "temperature 38",
+          "risk_drop": 0.1382
         },
         {
           "measure": "Lactate",
-          "text": "lactate 2.03, drawn 1 h ago",
-          "risk_drop": 0.0473
+          "text": "lactate 1.04, drawn 25 h ago",
+          "risk_drop": 0.0624
         },
         {
-          "measure": "SBP",
-          "text": "systolic BP 161 (up 35 in 6 h)",
-          "risk_drop": 0.0323
+          "measure": "Fibrinogen",
+          "text": "fibrinogen 393, drawn 73 h ago",
+          "risk_drop": 0.0595
         }
       ]
     },
     {
-      "kind": "false alarm",
-      "patient": "p102833",
-      "hour": 1,
-      "risk": 0.77,
-      "hours_before_onset": null,
+      "kind": "real sepsis",
+      "patient": "p119627",
+      "hour": 37,
+      "risk": 0.527,
+      "hours_before_onset": 48,
       "reasons": [
         {
-          "measure": "Lactate",
-          "text": "lactate 7.01, drawn this hour",
-          "risk_drop": 0.0982
+          "measure": "HR",
+          "text": "heart rate 109 (up 8 in 6 h)",
+          "risk_drop": 0.1254
+        },
+        {
+          "measure": "WBC",
+          "text": "white cell count 42, drawn 4 h ago",
+          "risk_drop": 0.1224
+        },
+        {
+          "measure": "Platelets",
+          "text": "platelets 80, drawn 4 h ago",
+          "risk_drop": 0.0876
+        }
+      ]
+    },
+    {
+      "kind": "real sepsis",
+      "patient": "p112509",
+      "hour": 3,
+      "risk": 0.557,
+      "hours_before_onset": 3,
+      "reasons": [
+        {
+          "measure": "Temp",
+          "text": "temperature 38.8",
+          "risk_drop": 0.3266
         },
         {
           "measure": "Age",
-          "text": "age 79",
-          "risk_drop": 0.0427
+          "text": "age 78",
+          "risk_drop": 0.0429
         },
         {
-          "measure": "Resp",
-          "text": "respiratory rate 25",
-          "risk_drop": 0.0317
+          "measure": "shock_index",
+          "text": "shock index (HR / systolic BP) 0.801",
+          "risk_drop": 0.0253
+        }
+      ]
+    },
+    {
+      "kind": "real sepsis",
+      "patient": "p116221",
+      "hour": 56,
+      "risk": 0.566,
+      "hours_before_onset": 80,
+      "reasons": [
+        {
+          "measure": "Creatinine",
+          "text": "creatinine (kidney) 3.01, drawn this hour",
+          "risk_drop": 0.1176
+        },
+        {
+          "measure": "WBC",
+          "text": "white cell count 20.4, drawn this hour",
+          "risk_drop": 0.1076
+        },
+        {
+          "measure": "Bilirubin_direct",
+          "text": "direct bilirubin 1, drawn 49 h ago",
+          "risk_drop": 0.101
+        }
+      ]
+    },
+    {
+      "kind": "false alarm",
+      "patient": "p110032",
+      "hour": 50,
+      "risk": 0.534,
+      "hours_before_onset": null,
+      "reasons": [
+        {
+          "measure": "WBC",
+          "text": "white cell count 23.1, drawn 9 h ago",
+          "risk_drop": 0.1425
+        },
+        {
+          "measure": "Calcium",
+          "text": "calcium 14.8, drawn 21 h ago",
+          "risk_drop": 0.1419
+        },
+        {
+          "measure": "PTT",
+          "text": "clotting time (PTT) 51.4, drawn 49 h ago",
+          "risk_drop": 0.078
+        }
+      ]
+    },
+    {
+      "kind": "false alarm",
+      "patient": "p102817",
+      "hour": 59,
+      "risk": 0.557,
+      "hours_before_onset": null,
+      "reasons": [
+        {
+          "measure": "Lactate",
+          "text": "lactate 1.65, drawn 50 h ago",
+          "risk_drop": 0.1752
+        },
+        {
+          "measure": "HR",
+          "text": "heart rate 108",
+          "risk_drop": 0.0926
+        },
+        {
+          "measure": "PTT",
+          "text": "clotting time (PTT) 122, drawn 39 h ago",
+          "risk_drop": 0.0659
         }
       ]
     },
     {
       "kind": "false alarm",
       "patient": "p100134",
-      "hour": 185,
-      "risk": 0.555,
+      "hour": 46,
+      "risk": 0.535,
       "hours_before_onset": null,
       "reasons": [
         {
-          "measure": "labs_drawn_so_far",
-          "text": "number of labs drawn 147",
-          "risk_drop": 0.2598
-        },
-        {
           "measure": "Resp",
-          "text": "respiratory rate 36 (up 14 in 6 h)",
-          "risk_drop": 0.2481
+          "text": "respiratory rate 28 (up 6 in 6 h)",
+          "risk_drop": 0.0969
         },
         {
-          "measure": "TroponinI",
-          "text": "troponin 0.06, drawn 110 h ago",
-          "risk_drop": 0.2015
+          "measure": "Hgb",
+          "text": "hemoglobin 8.3, drawn 1 h ago",
+          "risk_drop": 0.0958
+        },
+        {
+          "measure": "BUN",
+          "text": "BUN (kidney) 54, drawn 1 h ago",
+          "risk_drop": 0.0672
         }
       ]
     },
     {
       "kind": "false alarm",
-      "patient": "p118288",
-      "hour": 12,
-      "risk": 0.633,
+      "patient": "p118344",
+      "hour": 56,
+      "risk": 0.589,
       "hours_before_onset": null,
       "reasons": [
         {
-          "measure": "shock_index",
-          "text": "shock index (HR / systolic BP) 0.98",
-          "risk_drop": 0.1715
-        },
-        {
-          "measure": "O2Sat",
-          "text": "oxygen saturation 96",
-          "risk_drop": 0.0455
-        },
-        {
           "measure": "Temp",
-          "text": "temperature 37.4",
-          "risk_drop": 0.0304
+          "text": "temperature 38.2",
+          "risk_drop": 0.3898
+        },
+        {
+          "measure": "HR",
+          "text": "heart rate 115 (up 10 in 6 h)",
+          "risk_drop": 0.1532
+        },
+        {
+          "measure": "Resp",
+          "text": "respiratory rate 20 (down 4 in 6 h)",
+          "risk_drop": 0.0921
         }
       ]
     },
@@ -355,37 +355,47 @@
       "kind": "false alarm",
       "patient": "p117523",
       "hour": 7,
-      "risk": 0.584,
+      "risk": 0.662,
       "hours_before_onset": null,
       "reasons": [
         {
-          "measure": "Temp",
-          "text": "temperature 37.9",
-          "risk_drop": 0.0939
-        },
-        {
-          "measure": "Lactate",
-          "text": "lactate 2.27, drawn 3 h ago",
-          "risk_drop": 0.0708
-        },
-        {
           "measure": "Hgb",
           "text": "hemoglobin 8.1, drawn this hour",
-          "risk_drop": 0.0518
+          "risk_drop": 0.1016
+        },
+        {
+          "measure": "Temp",
+          "text": "temperature 37.9",
+          "risk_drop": 0.0604
+        },
+        {
+          "measure": "Hct",
+          "text": "hematocrit 24.4, drawn this hour",
+          "risk_drop": 0.0249
         }
       ]
     },
     {
       "kind": "false alarm",
-      "patient": "p116476",
-      "hour": 0,
-      "risk": 0.525,
+      "patient": "p116439",
+      "hour": 302,
+      "risk": 0.528,
       "hours_before_onset": null,
       "reasons": [
         {
-          "measure": "Age",
-          "text": "age 50",
-          "risk_drop": 0.0665
+          "measure": "Lactate",
+          "text": "lactate 3.35, drawn 35 h ago",
+          "risk_drop": 0.1673
+        },
+        {
+          "measure": "Bilirubin_direct",
+          "text": "direct bilirubin 20.6, drawn 186 h ago",
+          "risk_drop": 0.1498
+        },
+        {
+          "measure": "Fibrinogen",
+          "text": "fibrinogen 157, drawn 148 h ago",
+          "risk_drop": 0.1187
         }
       ]
     }
