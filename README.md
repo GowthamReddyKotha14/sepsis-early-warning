@@ -12,6 +12,12 @@ Sepsis is the body's extreme response to an infection. Every hour that treatment
 
 Reyna MA, et al. *Early Prediction of Sepsis From Clinical Data: The PhysioNet/Computing in Cardiology Challenge 2019.* Crit Care Med. 2020;48(2):210-217.
 
+## Evaluation design
+
+- **Split by patient, never by hour.** Hours from one patient are highly correlated; mixing them across train and test leaks information.
+- **Hospital A trains, hospital B tests.** Hospital A is split 80/20 into train and validation (stratified by sepsis). Hospital B is held out entirely, as an external test of whether the model transfers to a hospital it never saw.
+- **Scored the way the challenge scored it**, with the official utility metric (reimplemented and checked against PhysioNet's code), plus lead time and alarms per nurse shift.
+
 ## Status
 
 Work in progress. Built step by step; see the commit history.
